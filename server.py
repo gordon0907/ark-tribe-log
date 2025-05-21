@@ -6,8 +6,8 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# Path to the binary ARK tribe log file
-ARKTRIBE_PATH = r"\\192.168.0.100\docker\SteamCMD\steamapps\common\ARK Survival Evolved Dedicated Server\ShooterGame\Saved\SavedArks\1167393038.arktribe"
+# Path to the binary ARK tribe data file
+TRIBE_FILE_PATH = "/SavedArks/1167393038.arktribe"
 
 
 def read_int32(stream, signed=True) -> int:
@@ -45,7 +45,7 @@ def parse_sgml_line(line: str) -> list[dict]:
 
 
 def read_tribe_log() -> list[list[dict]]:
-    with open(ARKTRIBE_PATH, 'rb') as file:
+    with open(TRIBE_FILE_PATH, 'rb') as file:
         data = file.read()
 
     keyword = b'TribeLog\0'
