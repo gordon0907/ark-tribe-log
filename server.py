@@ -91,24 +91,24 @@ def index():
     logs = read_tribe_log()
 
     html_template = """
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="utf-8"/>
-            <title>ARK Tribe Log</title>
-            <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,">
-            <style>
-                body {
-                    background-color: #121212;
-                    color: #ffffff;
-                    font-family: monospace;
-                    margin: 0;
-                    padding: 20px;
-                }
-            </style>
-        </head>
-        <body></body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ARK Tribe Log</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body></body>
+</html>
     """
 
     soup = BeautifulSoup(html_template, 'lxml')
