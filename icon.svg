@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+  <style>
+    polygon {
+      fill: black;
+    }
+    @media (prefers-color-scheme: dark) {
+      polygon {
+        fill: white;
+      }
+    }
+  </style>
+  <polygon points="50,41 40,41 45,33"/>
+  <polygon points="30,6 25,15 20,6"/>
+  <polygon points="10,41 0,41 5,33"/>
+  <polygon points="17,32 14,37 16,41 12.36,41 6.51,31.64 11,24 14,24 13,20 15.4,16 19,16 18,12 19.44,9.11 24.1,17.5 19,26 24,26 25,23 29,32"/>
+  <polygon points="43.49,31.64 37.64,41 34,41 36.47,36.07 25.88,17.54 30.61,9.03 37,20 36,24 39,24"/>
+</svg>

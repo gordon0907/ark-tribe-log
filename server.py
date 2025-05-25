@@ -96,7 +96,7 @@ def index():
         <head>
             <meta charset="utf-8"/>
             <title>ARK Tribe Log</title>
-            <link rel="icon" type="image/png" href="data:image/png;base64,">
+            <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,">
             <style>
                 body {
                     background-color: #121212;
@@ -113,9 +113,9 @@ def index():
 
     soup = BeautifulSoup(html_template, 'lxml')
 
-    # Embed local PNG icon as the page favicon if available
+    # Embed local SVG icon as the page favicon if available
     try:
-        with open("./icon.png", 'rb') as file:
+        with open("./icon.svg", 'rb') as file:
             icon_data: bytes = file.read()
     except FileNotFoundError:
         pass

@@ -18,7 +18,7 @@ Reference: [Synology Help - Web Service](https://kb.synology.com/en-us/DSM/help/
 ### 1. Download and Place Files
 
 Download this repository and extract it. Copy `server.py` to a suitable DSM directory. Optionally, you can also copy
-`icon.png` to the same directory to enable the page favicon.  
+`icon.svg` to the same directory to enable the page favicon.  
 Example path:  
 `/volume1/web_packages/docker/ark-tribe-log`
 
