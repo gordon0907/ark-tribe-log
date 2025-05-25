@@ -99,11 +99,18 @@ def index():
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,">
     <style>
         body {
-            background-color: #121212;
-            color: #ffffff;
+            background-color: #ffffff;
+            color: #000000;
             font-family: monospace;
             margin: 0;
             padding: 20px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #ffffff;
+            }
         }
     </style>
 </head>
