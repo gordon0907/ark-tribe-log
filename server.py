@@ -79,6 +79,9 @@ def read_tribe_log() -> list[list[dict]]:
         # Exclude the null terminator and parse the SGML markup
         logs.append(parse_sgml_line(log_entry[:-1]))
 
+    # Validate the expected log count was read
+    assert len(logs) == num_logs
+
     return logs
 
 
