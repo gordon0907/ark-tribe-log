@@ -1,3 +1,4 @@
+import base64
 import io
 import re
 
@@ -95,6 +96,7 @@ def index():
         <head>
             <meta charset="utf-8"/>
             <title>ARK Tribe Log</title>
+            <link rel="icon" type="image/png" href="data:image/png;base64,">
             <style>
                 body {
                     background-color: #121212;
@@ -110,6 +112,18 @@ def index():
     """
 
     soup = BeautifulSoup(html_template, 'lxml')
+
+    # Embed local PNG icon as the page favicon if available
+    try:
+        with open("./icon.png", 'rb') as file:
+            icon_data: bytes = file.read()
+    except FileNotFoundError:
+        pass
+    else:
+        # Convert binary icon data to base64 and embed into href
+        icon_link = soup.find('link', attrs={'rel': 'icon'})
+        encoded_icon: str = base64.b64encode(icon_data).decode()
+        icon_link['href'] += encoded_icon
 
     # Render each log entry in reverse chronological order
     for log in reversed(logs):
