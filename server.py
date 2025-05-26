@@ -140,7 +140,7 @@ def index():
 
         soup.body.append(div)
 
-    return render_template_string(soup.prettify())
+    return soup.prettify()
 
 
 if __name__ == '__main__':
