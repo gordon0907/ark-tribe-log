@@ -42,8 +42,10 @@
                     });
 
                     if (index < existingLogDivs.length) {
-                        // Update existing log entry at this position
-                        existingLogDivs[index].innerHTML = logDiv.innerHTML;
+                        // Update existing log entry if content has changed
+                        if (existingLogDivs[index].innerHTML !== logDiv.innerHTML) {
+                            existingLogDivs[index].innerHTML = logDiv.innerHTML;
+                        }
                     } else {
                         // Insert new log entry at the top of the body
                         body.insertBefore(logDiv, body.firstElementChild);
