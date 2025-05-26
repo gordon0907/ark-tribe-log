@@ -1,11 +1,9 @@
-import base64
 import io
 import re
 
-from bs4 import BeautifulSoup
-from flask import Flask, render_template_string
+from flask import Flask
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/")
 
 # Path to the binary ARK tribe data file
 TRIBE_FILE_PATH = "/SavedArks/1167393038.arktribe"
@@ -45,6 +43,7 @@ def parse_sgml_line(line: str) -> list[dict]:
     return result
 
 
+@app.route("/api/logs")
 def read_tribe_log() -> list[list[dict]]:
     with open(TRIBE_FILE_PATH, 'rb') as file:
         data = file.read()
@@ -86,62 +85,9 @@ def read_tribe_log() -> list[list[dict]]:
     return logs
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    logs = read_tribe_log()
-
-    html_template = """
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="refresh" content="5">
-    <title>ARK Tribe Log</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,">
-    <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: monospace;
-            margin: 0;
-            padding: 20px;
-        }
-    </style>
-</head>
-<body></body>
-</html>
-    """
-
-    soup = BeautifulSoup(html_template, 'lxml')
-
-    # Embed local SVG icon as the page favicon if available
-    try:
-        with open("./icon.svg", 'rb') as file:
-            icon_data: bytes = file.read()
-    except FileNotFoundError:
-        pass
-    else:
-        # Convert binary icon data to base64 and embed into href
-        icon_link = soup.find('link', attrs={'rel': 'icon'})
-        encoded_icon: str = base64.b64encode(icon_data).decode()
-        icon_link['href'] += encoded_icon
-
-    # Render each log entry in reverse chronological order
-    for log in reversed(logs):
-        div = soup.new_tag('div')
-
-        for segment in log:
-            if segment['color'] is None:
-                div.append(segment['text'])
-            else:
-                span = soup.new_tag('span')
-                span['style'] = f"color: rgba{segment['color']};"
-                span.string = segment['text']
-                div.append(span)
-
-        soup.body.append(div)
-
-    return soup.prettify()
+    return app.send_static_file("index.html")
 
 
 if __name__ == '__main__':
