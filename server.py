@@ -95,6 +95,7 @@ def index():
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
+    <meta http-equiv="refresh" content="5">
     <title>ARK Tribe Log</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,">
     <style>
