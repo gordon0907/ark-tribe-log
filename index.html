@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>ARK Tribe Log</title>
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const body = document.body;
+
+    // Fetch logs from the server and update the DOM
+    function fetchAndRenderLogs() {
+        fetch("/api/logs")
+            .then(response => response.json())
+            .then(logs => {
+                const existingLogDivs = Array.from(body.querySelectorAll(':scope > div')).reverse();
+
+                logs.forEach((logEntry, index) => {
+                    // Create a container for one log entry
+                    const logDiv = document.createElement('div');
+
+                    // Build the log line
+                    logEntry.forEach(segment => {
+                        if (segment.color === null) {
+                            logDiv.appendChild(document.createTextNode(segment.text));
+                        } else {
+                            const span = document.createElement('span');
+                            span.style.color = `rgba(${segment.color.join(', ')})`;
+                            span.textContent = segment.text;
+                            logDiv.appendChild(span);
+                        }
+                    });
+
+                    if (index < existingLogDivs.length) {
+                        // Update existing log entry at this position
+                        existingLogDivs[index].innerHTML = logDiv.innerHTML;
+                    } else {
+                        // Insert new log entry at the top of the body
+                        body.insertBefore(logDiv, body.firstElementChild);
+                    }
+                });
+            });
+    }
+
+    // Load logs on initial page load
+    fetchAndRenderLogs();
+
+    // Refresh logs every 5 seconds
+    setInterval(fetchAndRenderLogs, 5000);
+</script>
+</body>
+</html>
