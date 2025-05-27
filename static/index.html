@@ -29,6 +29,9 @@
                     // Create a container for one log entry
                     const logDiv = document.createElement('div');
 
+                    // Store the log index as a data attribute for reference
+                    logDiv.dataset.index = index;
+
                     // Build the log line
                     logEntry.forEach(segment => {
                         if (segment.color === null) {
