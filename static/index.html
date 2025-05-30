@@ -24,13 +24,23 @@
             .then(response => response.json())
             .then(logs => {
                 const existingLogDivs = Array.from(body.querySelectorAll(':scope > div')).reverse();
+                const logCount = Math.max(logs.length, existingLogDivs.length);
 
-                logs.forEach((logEntry, index) => {
+                for (let index = 0; index < logCount; index++) {
+                    const logEntry = logs[index];
+                    const existingDiv = existingLogDivs[index];
+
+                    // Remove extra existing log entries
+                    if (logEntry === undefined) {
+                        existingDiv.remove();
+                        continue;
+                    }
+
                     // Create a container for one log entry
                     const logDiv = document.createElement('div');
 
                     // Store the log index as a data attribute for reference
-                    logDiv.dataset.index = index;
+                    logDiv.dataset.index = index.toString();
 
                     // Build the log line
                     logEntry.forEach(segment => {
@@ -44,16 +54,17 @@
                         }
                     });
 
-                    if (index < existingLogDivs.length) {
-                        // Update existing log entry if content has changed
-                        if (existingLogDivs[index].innerHTML !== logDiv.innerHTML) {
-                            existingLogDivs[index].innerHTML = logDiv.innerHTML;
-                        }
-                    } else {
+                    // Insert or update log entries in the DOM
+                    if (existingDiv === undefined) {
                         // Insert new log entry at the top of the body
                         body.insertBefore(logDiv, body.firstElementChild);
+                    } else {
+                        // Replace existing log entry if content differs
+                        if (!logDiv.isEqualNode(existingDiv)) {
+                            existingDiv.replaceWith(logDiv);
+                        }
                     }
-                });
+                }
             });
     }
 
